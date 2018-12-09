@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h3>add a new course</h3>
+    {% if messages %}
+                <ul class="redtext" id = "change" class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+                </ul>
+    {% endif %}
+
+    <form action="/addCourse" method="POST">
+        {%csrf_token%}
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name"><br>
+        <label for="desc">Description: </label><br>
+        <textarea name="desc" id="desc" cols="30" rows="10"></textarea><br>
+        <input type="submit" value="add">
+    </form>
+<div>
+    <h4>courses</h4>
+    <table border="2px">
+        <thead>  <tr>
+                <th>Course Name</th>
+                <th>description</th>
+                <th>Date Added</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for course in allcourse %}
+            <tr>
+                <td>{{course.name}}</td>
+                <td>{{course.desc}}</td>
+                <td>{{course.created_at}}</td>
+                <td><a href="course/destory/{{course.id}}">remove</a></td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
